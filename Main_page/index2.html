@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marine Life</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff;
+            color: #333;
+        }
+        header {
+            background-color: #006994;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        nav {
+            background-color: #005f73;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        section {
+            padding: 40px;
+            margin: 20px;
+            background-color: #eaf2f7;
+        }
+        section h2 {
+            color: #005f73;
+        }
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .image-card {
+            position: relative;
+            width: 22%;
+            margin: 20px 1%;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .image-card img {
+            width: 100%;
+            display: block;
+            transition: transform 0.3s;
+        }
+        .image-card:hover img {
+            transform: scale(1.1);
+        }
+        .image-card:hover {
+            transform: scale(1.05);
+        }
+        footer {
+            background-color: #006994;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        footer p {
+            margin: 5px 0;
+        }
+        footer a {
+            color: #fff;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Feedback form styling */
+        #feedback-form {
+            display: flex;
+            flex-direction: column;
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #feedback-form label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        #feedback-form input,
+        #feedback-form textarea {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #feedback-form button {
+            background-color: #006994;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #feedback-form button:hover {
+            background-color: #005f73;
+        }
+
+        #response-message {
+            margin-top: 20px;
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Marine Life</h1>
+        <p>Explore the wonders of the ocean and its inhabitants</p>
+    </header>
+    
+    <nav>
+        <a href="#about">About</a>
+        <a href="#marine-life">Marine Life</a>
+        <a href="#conservation">Conservation</a>
+        <a href="#contact">Contact</a>
+    </nav>
+    
+    <section id="about">
+        <h2>About Marine Life</h2>
+        <p>Marine life refers to all living organisms that inhabit the oceans, from the tiniest plankton to the largest whales. Oceans cover over 70% of the Earth’s surface, making marine life vital for the planet’s ecological balance.</p>
+    </section>
+    
+    <section id="marine-life">
+        <h2>Discover Marine Life</h2>
+        <div class="content">
+            <!-- Example Image Cards (You can replace these with your actual links) -->
+            <a class="image-card" href="coral-reef.html" title="Explore Coral Reefs">
+                <img src="coral reef.jpg" alt="Coral Reef">
+            </a>
+            <a class="image-card" href="sharks.html" title="Learn About Sharks">
+                <img src="Sharks.jpg" alt="Sharks">
+            </a>
+            <a class="image-card" href="turtles.html" title="Discover Sea Turtles">
+                <img src="sea turtle.jpg" alt="Sea Turtles">
+            </a>
+            <a class="image-card" href="axolotl.html" title="Meet the Axolotl">
+                <img src="axolotl.jpg" alt="Axolotl">
+            </a>
+            <a class="image-card" href="dolphins.html" title="Dolphins">
+                <img src="dolphins.jpg" alt="Dolphins">
+            </a>
+            <a class="image-card" href="seahorses.html" title="Seahorses">
+                <img src="seahorses.jpg" alt="Seahorses">
+            </a>
+            <a class="image-card" href="octopus.html" title="Octopus">
+                <img src="octopus.jpg" alt="Octopus">
+            </a>
+            <a class="image-card" href="jellyfish.html" title="Jellyfish">
+                <img src="jellyfish.jpg" alt="Jellyfish">
+            </a>
+            <a class="image-card" href="starfish.html" title="Starfish">
+                <img src="starfish.jpg" alt="Starfish">
+            </a>
+            <a class="image-card" href="clownfish.html" title="Clownfish">
+                <img src="clownfish.jpg" alt="Clownfish">
+            </a>
+            <a class="image-card" href="manatees.html" title="Manatees">
+                <img src="manatees.jpg" alt="Manatees">
+            </a>
+            <a class="image-card" href="manta-rays.html" title="Manta Rays">
+                <img src="manta-ray.jpg" alt="Manta Rays">
+            </a>
+            <a class="image-card" href="sea-lions.html" title="Sea Lions">
+                <img src="sea-lions.jpg" alt="Sea Lions">
+            </a>
+            <a class="image-card" href="beluga-whales.html" title="Beluga Whales">
+                <img src="beluga-whales.jpg" alt="Beluga Whales">
+            </a>
+            <a class="image-card" href="narwhals.html" title="Narwhals">
+                <img src="narwhals.jpg" alt="Narwhals">
+            </a>
+            <a class="image-card" href="blue_tang_fish.html" title="Blue Tang Fish">
+                <img src="blue_tang_fish.jpg" alt="Blue Tang Fish">
+            </a>
+            <!-- New animals -->
+            <a class="image-card" href="angelfish.html" title="Angelfish">
+                <img src="angelfish.jpg" alt="Angelfish">
+            </a>
+            <a class="image-card" href="parrotfish.html" title="Parrotfish">
+                <img src="parrotfish.jpg" alt="Parrotfish">
+            </a>
+            <a class="image-card" href="lobsters.html" title="Lobsters">
+                <img src="lobsters.jpg" alt="Lobsters">
+            </a>
+            <a class="image-card" href="sea-urchins.html" title="Sea Urchins">
+                <img src="sea-urchins.jpg" alt="Sea Urchins">
+            </a>
+        </div>
+    </section>
+    
+    <section id="conservation">
+        <h2>Marine Conservation</h2>
+        <p>Marine life faces numerous threats, including pollution, overfishing, climate change, and habitat destruction. It is crucial to protect marine ecosystems to preserve the biodiversity of our oceans. Join the effort in conserving marine life.</p>
+    </section>
+
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <p>If you have any questions or would like to get in touch with the team, feel free to contact us at the following:</p>
+        <ul>
+            <li><strong>Siddhant Shukla</strong>: <a href="mailto:siddhant.shukla@somaiya.edu">siddhant.shukla@somaiya.edu</a> | Phone: <a href="tel:+918657248522">8657248522</a></li>
+            <li><strong>Yashraj Ola</strong>: <a href="mailto:yashraj.ola@somaiya.edu">yashraj.ola@somaiya.edu</a> | Phone: <a href="tel:+919326680299">9326680299</a></li>
+            <li><strong>Shriya Shetty</strong>: <a href="mailto:shriya09@somaiya.edu">shriya09@somaiya.edu</a> | Phone: <a href="tel:+917506886032">7506886032</a></li>
+        </ul>
+    </section>
+
+    <!-- Feedback Section -->
+    <section id="feedback">
+        <h2>Feedback</h2>
+        <p>We would love to hear your thoughts or suggestions. Please fill out the form below:</p>
+
+        <!-- Feedback Form -->
+        <form id="feedback-form">
+            <label for="name">Your Name:</label>
+            <input type="text" id="name" name="name" required placeholder="Enter your name">
+            
+            <label for="email">Your Email:</label>
+            <input type="email" id="email" name="email" required placeholder="Enter your email">
+            
+            <label for="feedback">Your Feedback:</label>
+            <textarea id="feedback" name="feedback" required placeholder="Enter your feedback" rows="5"></textarea>
+            
+            <button type="submit">Submit Feedback</button>
+        </form>
+
+        <div id="response-message" style="display:none; margin-top:20px; color: green;">
+            <p>Thank you for your feedback!</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Marine Life. All rights reserved.</p>
+        <p>Created by <a href="mailto:siddhant.shukla@somaiya.edu">Siddhant Shukla</a>, <a href="mailto:yashraj.ola@somaiya.edu">Yashraj Ola</a>, and <a href="mailto:shriya09@somaiya.edu">Shriya Shetty</a></p>
+    </footer>
+
+    <script>
+        // Get form and response elements
+        const feedbackForm = document.getElementById('feedback-form');
+        const responseMessage = document.getElementById('response-message');
+
+        // Handle form submission
+        feedbackForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+            
+            // Simple validation (checking if all fields are filled)
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const feedback = document.getElementById('feedback').value;
+
+            if (name && email && feedback) {
+                
+                feedbackForm.reset(); // Reset the form after submission
+                responseMessage.style.display = 'block';
+            } else {
+                
+                alert("Please fill out all fields before submitting.");
+            }
+        });
+    </script>
+</body>
+</html>
