@@ -1,0 +1,95 @@
+/* CSS Reset and General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif; /* Or a more specific font if needed */
+    background-color: #132e49; /* Elephant */
+    color: #333; /* Default text color */
+}
+
+.container {
+    max-width: 800px; /* Adjust as needed */
+    margin: 20px auto;
+    background-color: #fff; /* White container */
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional shadow */
+}
+
+/* Header Section */
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    font-size: 2.5em; /* Adjust as needed */
+    color: #f48935; /* Orange */
+}
+
+/* Top Section */
+.top-section {
+    display: flex;
+}
+
+.top-left {
+    width: 60%;
+    padding-right: 20px;
+}
+
+.top-right {
+    width: 40%;
+}
+
+.top-left p {
+    text-align: justify;
+    line-height: 1.5;
+}
+
+.top-image {
+    width: 100%;
+    height: auto;
+    max-height: 300px; /* Adjust as needed */
+    object-fit: cover;
+}
+
+/* Middle Section */
+.middle-section {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.middle-section h2 {
+    font-size: 1.8em; /* Adjust as needed */
+    color: #245478; /* Bay of Many */
+    margin-bottom: 10px;
+}
+
+/* Bottom Section */
+.bottom-section {
+    display: flex;
+}
+
+.bottom-left {
+    width: 60%;
+    padding-right: 20px;
+}
+
+.bottom-right {
+    width: 40%;
+}
+
+.bottom-left p {
+    text-align: justify;
+    line-height: 1.5;
+}
+
+.bottom-image {
+    width: 100%;
+    height: auto;
+    max-height: 300px; /* Adjust as needed */
+    object-fit: cover;
+}
