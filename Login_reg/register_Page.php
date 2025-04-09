@@ -39,10 +39,11 @@
             font-weight: bold;
         }
         h2 {
-            color: #333;
             margin-bottom: 20px;
             text-transform: uppercase;
             letter-spacing: 2px;
+            color: rgb(255, 255, 255);
+            text-shadow: 2px 2px 4px rgb(0, 0, 0);
         }
         input {
             width: 100%;
