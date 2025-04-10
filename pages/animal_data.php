@@ -1,12 +1,16 @@
 <?php
 session_start();
 
+// Enable MySQLi error reporting for debugging
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
 // Database connection parameters
-$host = "localhost";
+$host    = "localhost";
 $db_user = "root";
 $db_pass = "";
 $db_name = "user_db"; // Replace with your actual database name
 
+// Create a new connection
 $conn = new mysqli($host, $db_user, $db_pass, $db_name);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -20,7 +24,41 @@ if (!isset($_GET['id'])) {
 
 $id = intval($_GET['id']);
 
-// Fetch species data by id
+// Fallback: If $_SESSION['id'] is not set, try to retrieve it using the username
+if (!isset($_SESSION['id']) && isset($_SESSION['username'])) {
+    // Adjust the query if your users table uses a different column name for the ID
+    $username = $_SESSION['username'];
+    $query = "SELECT id FROM users WHERE username = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($row = $result->fetch_assoc()){
+        $_SESSION['id'] = $row['id'];
+    }
+    $stmt->close();
+}
+
+// If the user is logged in (i.e., the session has the user ID), update/insert last_viewed record
+if (isset($_SESSION['id'])) {
+    $query = "
+        INSERT INTO last_viewed (loginId, species_id)
+        VALUES (?, ?)
+        ON DUPLICATE KEY UPDATE species_id = ?, viewed_at = CURRENT_TIMESTAMP
+    ";
+    $stmt_view = $conn->prepare($query);
+    if (!$stmt_view) {
+        die("Prepare failed: " . $conn->error);
+    }
+    // Bind the user's ID and species ID (with species ID repeated for the UPDATE clause)
+    $stmt_view->bind_param("iii", $_SESSION['id'], $id, $id);
+    if (!$stmt_view->execute()) {
+        die("Execute failed: " . $stmt_view->error);
+    }
+    $stmt_view->close();
+}
+
+// Fetch species data by id from the marine_animals table
 $stmt = $conn->prepare("SELECT * FROM marine_animals WHERE id = ?");
 $stmt->bind_param("i", $id);
 $stmt->execute();
@@ -41,10 +79,10 @@ $conn->close();
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Animal Data</title>
-  <!-- Bootstrap & original external stylesheet -->
+  <!-- Bootstrap & external stylesheet -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="/css/style.css" rel="stylesheet">
-  <!-- Custom CSS for the Animal Data Page (scoped within .animal-data-container) -->
+  <!-- Custom CSS for the Animal Data Page -->
   <style>
     .animal-data-container {
       font-family: 'Roboto', sans-serif;
@@ -148,42 +186,31 @@ $conn->close();
   </style>
 </head>
 <body>
-  <!-- Header (Unchanged) -->
+  <!-- Header -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
-      <!-- Marine Life Encyclopedia link now points to index.php -->
-      <a class="navbar-brand" href="../index.php">
-        Marine Life Encyclopedia
-      </a>
+      <a class="navbar-brand" href="../index.php">Marine Life Encyclopedia</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="species.php">Species</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="habitats.php">Habitats</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="conservation.php">Conservation</a>
-          </li>
+          <li class="nav-item"><a class="nav-link" href="species.php">Species</a></li>
+          <li class="nav-item"><a class="nav-link" href="habitats.php">Habitats</a></li>
+          <li class="nav-item"><a class="nav-link" href="conservation.php">Conservation</a></li>
         </ul>
         <ul class="navbar-nav">
           <?php if(isset($_SESSION['username'])): ?>
-            <!-- When logged in, show an icon with tooltip -->
             <li class="nav-item">
               <a class="nav-link" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?php echo htmlspecialchars($_SESSION['username']); ?>">
-                <!-- New icon: bi-person-fill -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                     class="bi bi-person-fill" viewBox="0 0 16 16">
                   <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3z"/>
                   <path fill-rule="evenodd" d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
                 </svg>
               </a>
             </li>
             <li class="nav-item">
-              <!-- Logout button styled like the login button -->
               <a class="nav-link btn btn-primary text-white ms-2" href="../Login_reg/logout.php">Logout</a>
             </li>
           <?php else: ?>
@@ -196,13 +223,12 @@ $conn->close();
     </div>
   </nav>
 
-  
   <!-- Go Back Button -->
   <button class="go-back" onclick="window.location.href='species.php'">Go Back</button>
   
   <!-- Animal Data Content -->
   <div class="animal-data-container">
-    <!-- 1 & 2. Top Image + Details Side-by-Side -->
+    <!-- Top Image + Details -->
     <div class="top-row section">
       <div class="top-image">
         <img src="<?php echo htmlspecialchars($data['top_image_url']); ?>" alt="<?php echo htmlspecialchars($data['name']); ?>">
@@ -215,24 +241,26 @@ $conn->close();
           <li><strong>Diet:</strong> <?php echo htmlspecialchars($data['diet']); ?></li>
           <li><strong>Conservation Status:</strong> <?php echo htmlspecialchars($data['conservation_status']); ?></li>
           <li><strong>Vulnerability:</strong> <?php echo htmlspecialchars($data['vulnerability']); ?></li>
-          <li><strong>Related Species:</strong><br> <?php echo nl2br(htmlspecialchars($data['related_species'])); ?></li>
+          <li><strong>Related Species:</strong><br>
+              <?php echo nl2br(htmlspecialchars($data['related_species'])); ?>
+          </li>
         </ul>
       </div>
     </div>
     
-    <!-- 3. Description Box -->
+    <!-- Description Box -->
     <div class="description-box section">
       <h2>Description</h2>
       <p><?php echo nl2br(htmlspecialchars($data['description'])); ?></p>
     </div>
     
-    <!-- 4. Interesting Facts -->
+    <!-- Interesting Facts -->
     <div class="facts-box section">
       <h2>Interesting Facts</h2>
       <p><?php echo nl2br(htmlspecialchars($data['interesting_facts'])); ?></p>
     </div>
     
-    <!-- 5. Video Section -->
+    <!-- Video Section -->
     <div class="video-section section">
       <iframe src="<?php echo htmlspecialchars($data['video_url']); ?>" 
               title="Video player"
@@ -240,7 +268,7 @@ $conn->close();
               allowfullscreen></iframe>
     </div>
     
-    <!-- 6. Final Row: Final Description & Bottom Image -->
+    <!-- Final Row: Final Description & Bottom Image -->
     <div class="final-row section">
       <div class="final-desc">
         <h2>Final Description</h2>
@@ -252,7 +280,7 @@ $conn->close();
     </div>
   </div>
   
-  <!-- Footer (Unchanged) -->
+  <!-- Footer -->
   <footer class="bg-dark text-light py-4 mt-5">
     <div class="container">
       <div class="row">
@@ -271,7 +299,7 @@ $conn->close();
         </div>
         <div class="col-md-4">
           <h5>Contact</h5>
-          <p>If you have any questions or would like to get in touch with the team, feel free to contact us:</p>
+          <p>If you have any questions or would like to get in touch, feel free to contact us:</p>
           <ul>
             <li>Siddhant Shukla: <a href="mailto:siddhant.shukla@somaiya.edu">siddhant.shukla@somaiya.edu</a> | Phone: <a href="tel:8657248522">8657248522</a></li>
             <li>Yashraj Ola: <a href="mailto:yashraj.ola@somaiya.edu">yashraj.ola@somaiya.edu</a> | Phone: <a href="tel:9326680299">9326680299</a></li>
@@ -286,7 +314,7 @@ $conn->close();
     </div>
   </footer>
   
-  <!-- JavaScript (Bootstrap bundle & your custom JS) -->
+  <!-- JavaScript -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="/js/main.js"></script>
   <script>

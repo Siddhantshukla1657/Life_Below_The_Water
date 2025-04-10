@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 09, 2025 at 01:59 PM
+-- Generation Time: Apr 10, 2025 at 09:49 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -87,6 +87,25 @@ INSERT INTO `initiatives` (`id`, `started_by`, `hosted_location`, `details`, `ma
 (19, 'Community Marine Conservation Group', 'Philippines', 'This initiative engages local communities in the Philippines in marine conservation efforts, promoting sustainable fishing practices and protecting marine biodiversity.', 'The Community Marine Conservation Group in the Philippines is working to engage local communities in marine conservation efforts. Through community-led initiatives, the group promotes sustainable fishing practices and protects marine biodiversity. By involving fishermen, schools, and local businesses in conservation activities, the initiative fosters a sense of community responsibility for environmental stewardship. The group also conducts educational programs to raise awareness about the importance of marine conservation and supports policy changes to protect marine ecosystems.', 'marine_protected_areas', 'image_placeholder.jpg'),
 (20, 'Ocean Cleanup Technology Developers', 'North Atlantic', 'This initiative develops innovative technologies to remove plastic waste from the North Atlantic, focusing on efficient and environmentally friendly solutions.', 'Ocean Cleanup Technology Developers are working on an initiative to develop innovative technologies for removing plastic waste from the North Atlantic. The focus is on creating efficient and environmentally friendly solutions that can effectively collect and recycle plastic debris without harming marine life. By collaborating with engineers, researchers, and conservationists, the initiative aims to provide scalable solutions to the problem of ocean pollution. The technologies developed will not only help clean up existing pollution but also serve as models for future cleanup efforts worldwide. The initiative also conducts research to better understand the impacts of plastic pollution on marine ecosystems.', 'ocean_cleanup', 'image_placeholder.jpg'),
 (21, ' Deep Ocean Biodiversity Conservation Initiative', 'Atlantic and Pacific Oceans', 'This initiative focuses on protecting biodiversity in deep-sea ecosystems through research and policy development.', 'The Deep Ocean Biodiversity Conservation Initiative aims to safeguard the rich and fragile ecosystems of the deep ocean. By conducting extensive research on species such as the vampire squid and their ecological roles, the initiative informs global conservation policies. It collaborates with international organizations to address threats like deep-sea mining and climate change while promoting sustainable practices. The initiative also raises awareness about the importance of preserving these habitats for future generations.', 'marine_protected_areas', 'https://deep-sea-conservation.org/wp-content/uploads/2024/01/FK200308-HydroidScreenShot-20200316.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `last_viewed`
+--
+
+CREATE TABLE `last_viewed` (
+  `loginId` int(11) NOT NULL,
+  `species_id` int(11) DEFAULT NULL,
+  `viewed_at` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `last_viewed`
+--
+
+INSERT INTO `last_viewed` (`loginId`, `species_id`, `viewed_at`) VALUES
+(1, 3, '2025-04-10 13:11:04');
 
 -- --------------------------------------------------------
 
@@ -200,6 +219,13 @@ ALTER TABLE `initiatives`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `last_viewed`
+--
+ALTER TABLE `last_viewed`
+  ADD PRIMARY KEY (`loginId`),
+  ADD KEY `species_id` (`species_id`);
+
+--
 -- Indexes for table `marine_animals`
 --
 ALTER TABLE `marine_animals`
@@ -257,6 +283,13 @@ ALTER TABLE `user_feedback`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `last_viewed`
+--
+ALTER TABLE `last_viewed`
+  ADD CONSTRAINT `last_viewed_ibfk_1` FOREIGN KEY (`loginId`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `last_viewed_ibfk_2` FOREIGN KEY (`species_id`) REFERENCES `marine_animals` (`id`);
 
 --
 -- Constraints for table `user_feedback`
