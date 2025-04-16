@@ -1,11 +1,6 @@
 <?php
 session_start();
 
-// Optional: Enforce session if desired
-// if (!isset($_SESSION['username'])) {
-//     header("Location: ../Login_reg/Login_page.php");
-//     exit();
-// }
 
 $host = "localhost";
 $db_user = "root";

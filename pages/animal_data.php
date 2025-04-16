@@ -1,14 +1,13 @@
 <?php
 session_start();
 
-// Enable MySQLi error reporting for debugging
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 // Database connection parameters
 $host    = "localhost";
 $db_user = "root";
 $db_pass = "";
-$db_name = "user_db"; // Replace with your actual database name
+$db_name = "user_db"; 
 
 // Create a new connection
 $conn = new mysqli($host, $db_user, $db_pass, $db_name);
@@ -16,7 +15,6 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Check if an 'id' is provided; if not, redirect to species page
 if (!isset($_GET['id'])) {
     header("Location: species.php");
     exit();
@@ -24,9 +22,7 @@ if (!isset($_GET['id'])) {
 
 $id = intval($_GET['id']);
 
-// Fallback: If $_SESSION['id'] is not set, try to retrieve it using the username
 if (!isset($_SESSION['id']) && isset($_SESSION['username'])) {
-    // Adjust the query if your users table uses a different column name for the ID
     $username = $_SESSION['username'];
     $query = "SELECT id FROM users WHERE username = ?";
     $stmt = $conn->prepare($query);
@@ -39,7 +35,6 @@ if (!isset($_SESSION['id']) && isset($_SESSION['username'])) {
     $stmt->close();
 }
 
-// If the user is logged in (i.e., the session has the user ID), update/insert last_viewed record
 if (isset($_SESSION['id'])) {
     $query = "
         INSERT INTO last_viewed (loginId, species_id)
@@ -50,7 +45,6 @@ if (isset($_SESSION['id'])) {
     if (!$stmt_view) {
         die("Prepare failed: " . $conn->error);
     }
-    // Bind the user's ID and species ID (with species ID repeated for the UPDATE clause)
     $stmt_view->bind_param("iii", $_SESSION['id'], $id, $id);
     if (!$stmt_view->execute()) {
         die("Execute failed: " . $stmt_view->error);
@@ -58,7 +52,6 @@ if (isset($_SESSION['id'])) {
     $stmt_view->close();
 }
 
-// Fetch species data by id from the marine_animals table
 $stmt = $conn->prepare("SELECT * FROM marine_animals WHERE id = ?");
 $stmt->bind_param("i", $id);
 $stmt->execute();
@@ -163,7 +156,7 @@ $conn->close();
     .animal-data-container .final-row .bottom-image img:hover {
       transform: scale(1.05);
     }
-    /* Go Back button styling */
+
     .go-back {
       margin: 20px;
       padding: 10px 20px;

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- ALL STYLES REMAIN UNCHANGED -->
+    <!-- ALL STYLES -->
     <style>
         body {
             font-family: 'Arial', sans-serif;

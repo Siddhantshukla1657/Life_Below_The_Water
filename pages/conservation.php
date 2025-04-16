@@ -12,7 +12,7 @@
   <!-- Navigation Bar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
-      <!-- Marine Life Encyclopedia link now points to index.php -->
+      <!-- Marine Life Encyclopedia that now points to index.php -->
       <a class="navbar-brand" href="../index.php">
         Marine Life Encyclopedia
       </a>
@@ -36,7 +36,7 @@
             <!-- When logged in, show an icon with tooltip -->
             <li class="nav-item">
               <a class="nav-link" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?php echo htmlspecialchars($_SESSION['username']); ?>">
-                <!-- New icon: bi-person-fill -->
+                <!-- New icon -->
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
                   <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3z"/>
                   <path fill-rule="evenodd" d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>

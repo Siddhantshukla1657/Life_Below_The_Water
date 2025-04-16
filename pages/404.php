@@ -12,7 +12,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
-      <!-- Marine Life Encyclopedia link now points to index.php -->
+      <!-- Marine Life Encyclopedia That link now points to index.php -->
       <a class="navbar-brand" href="index.php">
         Marine Life Encyclopedia
       </a>
