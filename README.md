@@ -12,7 +12,7 @@ A Marine life information website that allows users to explore detailed species 
 
 2. **Import the SQL database**
    - Open your MySQL client (like phpMyAdmin or MySQL Workbench).
-   - Import the provided `.sql` file located in the `/database` folder.
+   - Import the provided `.sql`.
 
 3. **Configure your environment**
    - In the `config.php` file, update the following:
