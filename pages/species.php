@@ -101,7 +101,7 @@
                   <option value="">All</option>
                   <option value="Ocean">Ocean</option>
                   <option value="Coral Reef">Coral Reef</option>
-                  <option value="Deep Sea">Deep Sea</option>
+                  <option value="Deep Ocean">Deep Ocean</option>
                   <option value="Freshwater">Freshwater</option>
                 </select>
               </div>
