@@ -15,8 +15,8 @@ A Marine life information website that allows users to explore detailed species 
    - Import the provided `.sql`.
 
 3. **Configure your environment**
-   - In the `config.php` file, update the following:
-     php
+   - In the `.php` files, update the following:
+     php codes snnipet
      $servername = "localhost";
      $username = "root";
      $password = "";
